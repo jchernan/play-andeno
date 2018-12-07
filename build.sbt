@@ -1,6 +1,8 @@
 name := """play-andeno"""
 organization := "com.andeno"
 
+sbtPlugin := true
+
 version := "0.1.0-SNAPSHOT"
 
 scalaVersion := "2.12.4"
