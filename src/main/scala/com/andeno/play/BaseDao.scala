@@ -4,8 +4,8 @@
 
 package com.andeno.play
 
-import java.sql.{Date, Timestamp}
-import java.time.{LocalDate, ZoneOffset, ZonedDateTime}
+import java.sql.{Date, Time, Timestamp}
+import java.time.{LocalDate, LocalTime, ZoneOffset, ZonedDateTime}
 
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import slick.jdbc.JdbcProfile
@@ -64,6 +64,8 @@ class BaseDao(val dbConfigProvider: DatabaseConfigProvider)
   }
 
   implicit def dateToSql(localDate: LocalDate): Date = Date.valueOf(localDate)
+
+  implicit def timeToSql(localTime: LocalTime): Time = Time.valueOf(localTime)
 
   implicit def sqlToDate(date: Date): LocalDate = date.toLocalDate
 
