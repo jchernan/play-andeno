@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2016-2020 Andeno Co. All rights reserved.
+ */
+
 package com.andeno.play
 
 import java.io.{BufferedWriter, FileWriter}
@@ -63,7 +67,10 @@ object SbtPlugin extends AutoPlugin {
         outputDir,
         pkg,
         username.get,
-        password.get
+        password.get,
+        "true", // ignoreInvalidDefaults
+        "com.andeno.play.SlickCodeGenerator",
+        "false" // outputToMultipleFiles
       ),
       streams.value.log
     ).failed foreach (sys error _.getMessage)

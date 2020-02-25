@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2019 Andeno Co. All rights reserved.
+ * Copyright (c) 2016-2020 Andeno Co. All rights reserved.
  */
 
 package com.andeno.play
@@ -8,7 +8,6 @@ import java.sql.{Date, Time, Timestamp}
 import java.time.{LocalDate, LocalTime, ZoneOffset, ZonedDateTime}
 
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
-import slick.jdbc.JdbcProfile
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.language.higherKinds
@@ -18,7 +17,7 @@ import scala.language.implicitConversions
   * Base implementation for a DAO.
   */
 class BaseDao(val dbConfigProvider: DatabaseConfigProvider)
-  extends HasDatabaseConfigProvider[JdbcProfile] {
+  extends HasDatabaseConfigProvider[PostgresProfile] {
 
   import dbConfig.profile.api._
 
