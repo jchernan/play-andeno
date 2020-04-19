@@ -1,11 +1,13 @@
 name := """play-andeno"""
 organization := "com.andeno"
 
-sbtPlugin := true
+homepage := Some(url("https://github.com/jchernan/play-andeno"))
 
-version := "0.1.0-SNAPSHOT"
+licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0"))
 
-scalaVersion := "2.12.4"
+version := "0.1.0"
+
+scalaVersion := "2.12.11"
 
 libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play" % "2.6.25",
@@ -20,3 +22,9 @@ val scalastyleDir = Def.setting(baseDirectory.value / "project")
 
 scalastyleConfig := scalastyleDir.value / "scalastyle-config.xml"
 scalastyleFailOnError := true
+
+publishMavenStyle := true
+pomIncludeRepository := { _ => false }
+
+bintrayPackageLabels := Seq("play", "playframework")
+bintrayVcsUrl := Some("""git@github.com:jchernan/play-andeno.git""")
