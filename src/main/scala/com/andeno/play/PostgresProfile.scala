@@ -4,7 +4,7 @@
 
 package com.andeno.play
 
-import com.github.tminglei.slickpg.{ExPostgresProfile, PgArraySupport}
+import com.github.tminglei.slickpg._
 import slick.codegen.SourceCodeGenerator
 import slick.model.Model
 import slick.sql.SqlProfile.ColumnOption
@@ -13,12 +13,18 @@ import slick.sql.SqlProfile.ColumnOption
   * Extended PostgresProfile.
   */
 trait PostgresProfile extends ExPostgresProfile
-  with PgArraySupport {
+  with PgArraySupport
+  with PgDate2Support
+  with PgPlayJsonSupport {
+
+  def pgjson: String = "jsonb"
 
   override val api = ExAPI
 
   object ExAPI extends API
     with ArrayImplicits
+    with DateTimeImplicits
+    with JsonImplicits
 }
 
 object PostgresProfile extends PostgresProfile
@@ -42,9 +48,9 @@ class SlickCodeGenerator(model: Model) extends SourceCodeGenerator(model) {
             }
         } getOrElse {
           model.tpe match {
-            // TODO: these will be supported later
-            // case "java.sql.Date" => "java.time.LocalDate"
-            // case "java.sql.Time" => "java.time.LocalTime"
+            case "java.sql.Date" => "java.time.LocalDate"
+            case "java.sql.Time" => "java.time.LocalTime"
+            case "java.sql.Timestamp" => "java.time.OffsetDateTime"
             case _ => super.rawType
           }
         }

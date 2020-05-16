@@ -13,8 +13,8 @@ libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play" % "2.6.25",
   "com.typesafe.play" %% "play-slick" % "3.0.4",
   "com.typesafe.slick" %% "slick-codegen" % "3.3.2",
-  "com.github.tminglei" %% "slick-pg" % "0.18.1",
-  "com.github.tminglei" %% "slick-pg_play-json" % "0.18.1",
+  "com.github.tminglei" %% "slick-pg" % "0.19.0",
+  "com.github.tminglei" %% "slick-pg_play-json" % "0.19.0",
   "org.scalatest" %% "scalatest" % "3.0.5" % "test"
 )
 

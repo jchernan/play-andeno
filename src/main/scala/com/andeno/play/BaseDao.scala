@@ -4,8 +4,7 @@
 
 package com.andeno.play
 
-import java.sql.{Date, Time, Timestamp}
-import java.time.{LocalDate, LocalTime, ZoneOffset, ZonedDateTime}
+import java.time.{OffsetDateTime, ZoneId}
 
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 
@@ -51,30 +50,19 @@ class BaseDao(val dbConfigProvider: DatabaseConfigProvider)
   }
 
   def update[E, U, C[_]](findQuery: Query[E, U, C])
-    (updateFunction: (U, Timestamp) => U)
+    (updateFunction: (U, OffsetDateTime) => U)
     (implicit executionContext: ExecutionContext): Future[Int] = {
     for {
-      timestamp <- db.run(now())
       row <- db.run(findQuery.result.headOption)
       updated <- row.fold(Future.successful(0)) { r =>
-        db.run(findQuery.update(updateFunction(r, timestamp)))
+        db.run(findQuery.update(updateFunction(r, now)))
       }
     } yield updated
-  }
-
-  implicit def dateToSql(localDate: LocalDate): Date = Date.valueOf(localDate)
-
-  implicit def timeToSql(localTime: LocalTime): Time = Time.valueOf(localTime)
-
-  implicit def sqlToDate(date: Date): LocalDate = date.toLocalDate
-
-  implicit def sqlToTime(timestamp: Timestamp): ZonedDateTime = {
-    ZonedDateTime.of(timestamp.toLocalDateTime, ZoneOffset.UTC)
   }
 
   def numeric(string: String): String = {
     string.replaceAll("[^0-9]", "")
   }
 
-  protected def now() = sql"select now()".as[Timestamp].head
+  def now: OffsetDateTime = OffsetDateTime.now(ZoneId.of("UTC"))
 }
