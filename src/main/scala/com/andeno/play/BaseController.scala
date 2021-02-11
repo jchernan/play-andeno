@@ -39,6 +39,16 @@ trait BaseController extends play.api.mvc.BaseController {
     }
   }
 
+  def noBodyResult[A](response: Future[Option[A]])
+    (implicit executionContext: ExecutionContext): Future[Result] = {
+    recover {
+      response.map {
+        case Some(_) => Ok
+        case None => NotFound
+      }
+    }
+  }
+
   def recover(result: Future[Result])
     (implicit executionContext: ExecutionContext): Future[Result] = {
     result.recover {
