@@ -38,7 +38,7 @@ class SlickCodeGenerator(model: Model) extends SourceCodeGenerator(model) {
     override def Column = new Column(_) { // scalastyle:ignore
 
       override def rawType: String = {
-        model.options.find(_.isInstanceOf[ColumnOption.SqlType]).flatMap {
+        this.model.options.find(_.isInstanceOf[ColumnOption.SqlType]).flatMap {
           tpe =>
             tpe.asInstanceOf[ColumnOption.SqlType].typeName match {
               case "_text" | "text[]" => Option("List[String]")
@@ -47,7 +47,7 @@ class SlickCodeGenerator(model: Model) extends SourceCodeGenerator(model) {
               case _ => None
             }
         } getOrElse {
-          model.tpe match {
+          this.model.tpe match {
             case "java.sql.Date" => "java.time.LocalDate"
             case "java.sql.Time" => "java.time.LocalTime"
             case "java.sql.Timestamp" => "java.time.OffsetDateTime"
