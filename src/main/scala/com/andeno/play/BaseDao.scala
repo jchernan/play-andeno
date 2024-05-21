@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2023 Andeno Co. All rights reserved.
+ * Copyright (c) 2016-2024 Andeno Co. All rights reserved.
  */
 
 package com.andeno.play
